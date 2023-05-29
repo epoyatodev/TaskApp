@@ -13,7 +13,7 @@ struct CustomDatePicker: View {
     @State var currentMonth: Int = 0
     @EnvironmentObject var viewModel: TaskViewModel
     @State private var showAlert = false
-
+    
     var body: some View {
         VStack(spacing: 35){
             
@@ -46,8 +46,8 @@ struct CustomDatePicker: View {
                     Image(systemName: "chevron.right")
                         .font(.title2)
                 }
-
-
+                
+                
             }
             .padding(.horizontal)
             // Day view...
@@ -91,44 +91,44 @@ struct CustomDatePicker: View {
                 }){
                     
                     
-                        ForEach(task.task){ task in
-                            HStack(){
-                                VStack(alignment: .leading, spacing: 10){
-                                    Text(task.time, style: .date)
-                                    
-                                    Text(task.title)
-                                        .font(.title2.bold())
-                                }
-                                Spacer()
+                    ForEach(task.task){ task in
+                        HStack(){
+                            VStack(alignment: .leading, spacing: 10){
+                                Text(task.time, style: .date)
                                 
-                                Image(systemName: "trash")
-                                    .onTapGesture {
-                                        showAlert = true
-                                    }
-                                    .alert(isPresented: $showAlert) {
-                                              Alert(
-                                                  title: Text("Eliminar tarea"),
-                                                  message: Text("¿Estás seguro de que deseas eliminar este elemento?"),
-                                                  primaryButton: .destructive(Text("Eliminar")) {
-                                                      viewModel.deleteTask(taskID: task.id)
-
-                                                  },
-                                                  secondaryButton: .cancel()
-                                              )
-                                          }
+                                Text(task.title)
+                                    .font(.title2.bold())
                             }
-                           
-                            .padding(.vertical, 10)
-                            .padding(.horizontal)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(
-                                Color("Purple")
-                                    .opacity(0.5)
-                                    .cornerRadius(10)
-                                
-                            )
+                            Spacer()
                             
+                            Image(systemName: "trash")
+                                .onTapGesture {
+                                    showAlert = true
+                                }
+                                .alert(isPresented: $showAlert) {
+                                    Alert(
+                                        title: Text("Eliminar tarea"),
+                                        message: Text("¿Estás seguro de que deseas eliminar este elemento?"),
+                                        primaryButton: .destructive(Text("Eliminar")) {
+                                            viewModel.deleteTask(taskID: task.id)
+                                            
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
+                                }
                         }
+                        
+                        .padding(.vertical, 10)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            Color("Purple")
+                                .opacity(0.5)
+                                .cornerRadius(10)
+                            
+                        )
+                        
+                    }
                     
                 }else{
                     Text("No Task")
@@ -136,7 +136,7 @@ struct CustomDatePicker: View {
             }
             .padding()
             
-          
+            
             
         }
         .onChange(of: currentMonth) { newValue in
@@ -193,7 +193,7 @@ struct CustomDatePicker: View {
     
     func getCurrentMonth() -> Date {
         let calendar = Calendar.current
-
+        
         guard let currentMonth = calendar.date(byAdding: .month, value: currentMonth, to: Date()) else {
             return Date()
         }
@@ -202,7 +202,7 @@ struct CustomDatePicker: View {
     
     func extractDate() -> [DateValue]{
         let calendar = Calendar.current
-
+        
         let currentMonth = getCurrentMonth()
         var days =  currentMonth.getAllDates().compactMap{ date -> DateValue in
             let day = calendar.component(.day, from: date)

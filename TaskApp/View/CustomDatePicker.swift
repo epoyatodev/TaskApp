@@ -107,8 +107,8 @@ struct CustomDatePicker: View {
                                 }
                                 .alert(isPresented: $showAlert) {
                                     Alert(
-                                        title: Text("Eliminar tarea"),
-                                        message: Text("¿Estás seguro de que deseas eliminar este elemento?"),
+                                        title: Text("Delete Task"),
+                                        message: Text("Are you sure you want to delete this item?"),
                                         primaryButton: .destructive(Text("Eliminar")) {
                                             viewModel.deleteTask(taskID: task.id)
                                             
